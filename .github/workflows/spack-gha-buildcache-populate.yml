@@ -6,6 +6,8 @@ on: push
 jobs:
   example:
     runs-on: ubuntu-22.04
+    permissions:
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -15,6 +17,21 @@ jobs:
         run: spack -e . concretize
       - name: Install
         run: spack -e . install --no-check-signature
+      - name: Push packages and update index
+        run: |
+          spack -e . \
+            mirror set \
+            --push \
+            --oci-username ${{ github.actor }} \
+            --oci-password "${{ secrets.GITHUB_TOKEN }}" \
+            local-buildcache
+          spack -e . \
+            buildcache push \
+            --base-image ubuntu:22.04 \
+            --unsigned \
+            --update-index \
+            local-buildcache
+        if: ${{ !cancelled() }}
       - name: Run
         run: |
           ./my_view/bin/python -c 'print("hello world")'

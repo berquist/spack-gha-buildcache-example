@@ -9,6 +9,9 @@ spack:
       root: /opt/spack
       padded_length: 128
 
-  packages:
-    all:
-      require: '%gcc@12 target=x86_64_v2'
+  mirrors:
+    local-buildcache: oci://ghcr.io/berquist/spack-gha-buildcache-example
+
+  # packages:
+  #   all:
+  #     require: '%gcc@12 target=x86_64_v2'
