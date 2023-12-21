@@ -6,7 +6,7 @@ spack:
 
   config:
     install_tree:
-      root: /opt/spack
+      # root: /opt/spack
       padded_length: 128
 
   mirrors:
