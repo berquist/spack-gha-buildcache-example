@@ -1,0 +1,20 @@
+---
+name: Build
+
+on: push
+
+jobs:
+  example:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Spack
+        uses: spack/setup-spack@v2
+      - name: Concretize
+        run: spack -e . concretize
+      - name: Install
+        run: spack -e . install --no-check-signature
+      - name: Run
+        run: |
+          ./my_view/bin/python -c 'print("hello world")'
