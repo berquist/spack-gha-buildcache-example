@@ -5,7 +5,13 @@ on: push
 
 jobs:
   example:
-    runs-on: ubuntu-22.04
+    name: os:${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
     permissions:
       packages: write
     steps:
@@ -27,7 +33,6 @@ jobs:
             local-buildcache
           spack -e . \
             buildcache push \
-            --base-image ubuntu:22.04 \
             --unsigned \
             --update-index \
             local-buildcache

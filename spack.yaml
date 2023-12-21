@@ -11,7 +11,3 @@ spack:
 
   mirrors:
     local-buildcache: oci://ghcr.io/berquist/spack-gha-buildcache-example
-
-  # packages:
-  #   all:
-  #     require: '%gcc@12 target=x86_64_v2'
