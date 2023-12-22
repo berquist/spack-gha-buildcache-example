@@ -1,0 +1,4 @@
+._my_view/
+.spack-env/
+my_view
+spack.lock

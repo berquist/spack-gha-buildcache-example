@@ -1,4 +1,3 @@
----
 spack:
   view: my_view
   specs:
@@ -10,4 +9,8 @@ spack:
       padded_length: 128
 
   mirrors:
-    local-buildcache: oci://ghcr.io/berquist/spack-gha-buildcache-example
+    local-fs-linux-home: /home/eric/spack-mirror
+    local-fs-mac-home: /Users/eric/spack-mirror
+    local-fs-mac-work: /Users/ejberqu/spack-mirror
+    local-buildcache:
+      url: oci://ghcr.io/berquist/spack-gha-buildcache-example
