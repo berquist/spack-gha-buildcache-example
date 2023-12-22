@@ -1,7 +1,7 @@
 spack:
   view: my_view
   specs:
-    - python@3.11
+  - git
 
   config:
     install_tree:
