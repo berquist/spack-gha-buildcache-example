@@ -9,8 +9,9 @@ spack:
       padded_length: 128
 
   mirrors:
+    E4S: https://cache.e4s.io
     local-fs-linux-home: /home/eric/spack-mirror
     local-fs-mac-home: /Users/eric/spack-mirror
     local-fs-mac-work: /Users/ejberqu/spack-mirror
-    local-buildcache:
+    personal-github:
       url: oci://ghcr.io/berquist/spack-gha-buildcache-example
