@@ -1,0 +1,79 @@
+* **Spack:** 0.22.0.dev0 (bc9b39cb73a83219306e67191b560412155200d5)
+* **Python:** 3.9.6
+* **Platform:** darwin-sonoma-m2
+* **Concretizer:** clingo
+==> Concretized perl
+[+]  d2tmw4b  perl@5.38.0%apple-clang@15.0.0+cpanm+opcode+open+shared+threads build_system=generic patches=714e4d1 arch=darwin-sonoma-m2
+[+]  zzhn6bq      ^berkeley-db@18.1.40%apple-clang@15.0.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=darwin-sonoma-m2
+[+]  ybxeibk          ^gnuconfig@2022-09-17%apple-clang@15.0.0 build_system=generic arch=darwin-sonoma-m2
+[+]  vqyl5ow      ^bzip2@1.0.8%apple-clang@15.0.0~debug~pic+shared build_system=generic arch=darwin-sonoma-m2
+[+]  om7om6o          ^diffutils@3.9%apple-clang@15.0.0 build_system=autotools arch=darwin-sonoma-m2
+[+]  64wjeqt              ^libiconv@1.17%apple-clang@15.0.0 build_system=autotools libs=shared,static arch=darwin-sonoma-m2
+[+]  suam277      ^gdbm@1.23%apple-clang@15.0.0 build_system=autotools arch=darwin-sonoma-m2
+[+]  ezbg36i          ^readline@8.2%apple-clang@15.0.0 build_system=autotools patches=bbf97f1 arch=darwin-sonoma-m2
+[+]  nz36btw              ^ncurses@6.4%apple-clang@15.0.0~symlinks+termlib abi=none build_system=autotools arch=darwin-sonoma-m2
+[+]  5hbreiv                  ^pkgconf@1.9.5%apple-clang@15.0.0 build_system=autotools arch=darwin-sonoma-m2
+[+]  qumc4hw      ^gmake@4.4.1%apple-clang@15.0.0~guile build_system=generic arch=darwin-sonoma-m2
+[+]  pvkio5y      ^zlib-ng@2.1.5%apple-clang@15.0.0+compat+opt build_system=autotools arch=darwin-sonoma-m2
+
+==> All of the packages are already installed
+==> [2024-01-17-13:02:34.529170] Reading config from file /Users/ejberqu/development/forks/spack/etc/spack/defaults/config.yaml
+==> [2024-01-17-13:02:34.543603] Reading config from file /Users/ejberqu/.spack/config.yaml
+==> [2024-01-17-13:02:34.544836] Reading config from file /Users/ejberqu/development/personal/spack-gha-buildcache-example/spack.yaml
+==> [2024-01-17-13:02:34.548752] Reading config from file /Users/ejberqu/development/forks/spack/etc/spack/defaults/config.yaml
+==> [2024-01-17-13:02:34.567822] Reading config from file /Users/ejberqu/.spack/config.yaml
+==> [2024-01-17-13:02:34.568997] Using environment '/Users/ejberqu/development/personal/spack-gha-buildcache-example'
+==> [2024-01-17-13:02:34.578382] Imported buildcache from built-in commands
+==> [2024-01-17-13:02:34.580204] Imported buildcache from built-in commands
+==> [2024-01-17-13:02:34.580491] Reading config from file /Users/ejberqu/development/forks/spack/etc/spack/defaults/mirrors.yaml
+==> [2024-01-17-13:02:34.581770] Reading config from file /Users/ejberqu/.spack/mirrors.yaml
+==> [2024-01-17-13:02:34.583612] DATABASE LOCK TIMEOUT: 60s
+==> [2024-01-17-13:02:34.583648] PACKAGE LOCK TIMEOUT: No timeout
+==> [2024-01-17-13:02:34.589741] Selected 12 specs to push to oci://ghcr.io/berquist/spack-gha-buildcache-example
+==> [2024-01-17-13:02:34.635392] 12 specs need to be pushed to ghcr.io/berquist/spack-gha-buildcache-example
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/cmd/buildcache.py", line 506, in _push_single_spack_binary_blob
+    compressed_tarfile_checksum, tarfile_checksum = spack.oci.oci.create_tarball(spec, filename)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/oci/oci.py", line 41, in create_tarball
+    buildinfo = spack.binary_distribution.get_buildinfo_dict(spec)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/binary_distribution.py", line 789, in get_buildinfo_dict
+    manifest = get_buildfile_manifest(spec)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/binary_distribution.py", line 726, in get_buildfile_manifest
+    visit_directory_tree(root, visitor)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/llnl/util/filesystem.py", line 1496, in visit_directory_tree
+    dir_entries = sorted(os.scandir(dir), key=lambda d: d.name)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/ejberqu/development/forks/spack/opt/spack/darwin-sonoma-m2/apple-clang-15.0.0/ncurses-6.4-nz36btw5cqv7k7j2aqfd3gwwzisj6gn4/'
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/ejberqu/development/forks/spack/bin/spack", line 52, in <module>
+    sys.exit(main())
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack_installable/main.py", line 42, in main
+    sys.exit(spack.main.main(argv))
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/main.py", line 1066, in main
+    return _main(argv)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/main.py", line 1019, in _main
+    return finish_parse_and_run(parser, cmd_name, args, env_format_error)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/main.py", line 1049, in finish_parse_and_run
+    return _invoke_command(command, parser, args, unknown)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/main.py", line 648, in _invoke_command
+    return_val = command(parser, args)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/cmd/buildcache.py", line 1143, in buildcache
+    args.func(args)
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/cmd/buildcache.py", line 397, in push_fn
+    skipped, base_images, checksums = _push_oci(
+  File "/Users/ejberqu/development/forks/spack/lib/spack/spack/cmd/buildcache.py", line 721, in _push_oci
+    new_blobs = pool.starmap(
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 372, in starmap
+    return self._map_async(func, iterable, starmapstar, chunksize).get()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 771, in get
+    raise self._value
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/ejberqu/development/forks/spack/opt/spack/darwin-sonoma-m2/apple-clang-15.0.0/ncurses-6.4-nz36btw5cqv7k7j2aqfd3gwwzisj6gn4/'
