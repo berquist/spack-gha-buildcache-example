@@ -1,11 +1,10 @@
 spack:
   view: my_view
   specs:
-  - git
+  - perl
 
   config:
     install_tree:
-      # root: /opt/spack
       padded_length: 128
 
   mirrors:
@@ -15,3 +14,4 @@ spack:
     local-fs-mac-work: /Users/ejberqu/spack-mirror
     personal-github:
       url: oci://ghcr.io/berquist/spack-gha-buildcache-example
+      signed: false

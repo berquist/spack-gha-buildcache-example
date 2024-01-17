@@ -2,4 +2,4 @@
 
 spack concretize --force --fresh
 spack install --fail-fast
-spack buildcache push --force personal-github
+spack -d buildcache push --rebuild-index --force personal-github
