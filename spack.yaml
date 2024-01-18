@@ -1,17 +1,17 @@
 spack:
   view: my_view
   specs:
-  - perl
+  - python
 
   config:
     install_tree:
       padded_length: 128
 
   mirrors:
-    E4S: https://cache.e4s.io
-    local-fs-linux-home: /home/eric/spack-mirror
-    local-fs-mac-home: /Users/eric/spack-mirror
-    local-fs-mac-work: /Users/ejberqu/spack-mirror
+    # local: /Users/ejberqu/spack-mirror
     personal-github:
       url: oci://ghcr.io/berquist/spack-gha-buildcache-example
       signed: false
+      access_pair:
+      - berquist
+      - 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

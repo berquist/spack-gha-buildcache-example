@@ -1,7 +1,10 @@
 ---
 name: Build
 
-on: push
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+  push:
 
 jobs:
   example:
@@ -18,35 +21,38 @@ jobs:
     permissions:
       packages: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      # - name: Setup Spack
-      #   uses: spack/setup-spack@v2
-      - name: Checkout Spack
+      - uses: actions/checkout@v4
+      - name: Clone Spack
         uses: actions/checkout@v4
         with:
           repository: spack/spack
           path: spack
-      - name: Add Spack to PATH
+      - name: Add Spack to PATH and set mirror name
         run: |
           echo "${PWD}/spack/bin" >> "${GITHUB_PATH}"
-      - name: Concretize
-        run: spack -e . concretize
-      - name: Install
-        run: spack -e . install --no-check-signature
+          echo "mirror_name=github-container-registry" >> "${GITHUB_ENV}"
+      - name: Print Spack configuration
+        run: |
+          spack config blame config
+          spack debug report
+      - name: Set credentials for mirror
+        run: |
+          eval "$(spack env activate --sh .)"
+          spack mirror set \
+              --oci-username ${{ github.actor }} \
+              --oci-password "${{ secrets.GITHUB_TOKEN }}" \
+              "${mirror_name}"
+      - name: Install packages into environment
+        run: |
+          eval "$(spack env activate --sh .)"
+          bash ./install.sh
       - name: Push packages and update index
         run: |
-          spack -e . \
-            mirror set \
-            --push \
-            --oci-username ${{ github.actor }} \
-            --oci-password "${{ secrets.GITHUB_TOKEN }}" \
-            local-buildcache
-          spack -e . \
-            buildcache push \
-            --unsigned \
-            --update-index \
-            local-buildcache
+          eval "$(spack env activate --sh .)"
+          spack -d buildcache push \
+              --unsigned \
+              --update-index \
+              "${mirror_name}"
         if: ${{ !cancelled() }}
       - name: Run
         run: |
