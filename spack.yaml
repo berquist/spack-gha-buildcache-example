@@ -8,10 +8,8 @@ spack:
       padded_length: 128
 
   mirrors:
-    # local: /Users/ejberqu/spack-mirror
     personal-github:
       url: oci://ghcr.io/berquist/spack-gha-buildcache-example
       signed: false
       access_pair:
       - berquist
-      - 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
