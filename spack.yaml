@@ -8,7 +8,7 @@ spack:
       padded_length: 128
 
   mirrors:
-    personal-github:
+    github-container-registry:
       url: oci://ghcr.io/berquist/spack-gha-buildcache-example
       signed: false
       access_pair:
