@@ -12,6 +12,8 @@ Run workflow:
         IMAGE:
           - debian:trixie-20240110
           - rockylinux/rockylinux:9.3.20231119-ubi
+          # GitLab current default
+          - ruby:3.1
       # https://docs.gitlab.com/ee/ci/runners/saas/macos_saas_runner.html
       # - RUNNER_TAG: saas-macos-medium-m1
       #   IMAGE:
@@ -37,7 +39,7 @@ Run workflow:
         --oci-password ${CI_REGISTRY_PASSWORD} \
         gitlab-container-registry \
         oci://${CI_REGISTRY_IMAGE}
-    ./install.sh gitlab-container-registry | tee install.log
+    ./install.sh gitlab-container-registry >& install.log
     ./my_view/bin/python -c 'print("hello world")'
   artifacts:
     when: always
