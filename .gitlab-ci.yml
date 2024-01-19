@@ -6,6 +6,20 @@ stages:
   - all
 
 Run workflow:
+  parallel:
+    matrix:
+      - RUNNER_TAG: saas-linux-small-amd64
+        IMAGE:
+          - debian:trixie-20240110
+          - rockylinux/rockylinux:9.3.20231119-ubi
+      - RUNNER_TAG: saas-macos-medium-m1
+        IMAGE:
+          - macos-12-xcode-14
+          - macos-13-xcode-14
+          - macos-14-xcode-15
+  tags:
+    - ${RUNNER_TAG}
+  image: ${IMAGE}
   stage: all
   script: |
     set -x
@@ -18,5 +32,9 @@ Run workflow:
         --oci-password ${CI_REGISTRY_PASSWORD} \
         gitlab-container-registry \
         oci://${CI_REGISTRY_IMAGE}
-    ./install.sh gitlab-container-registry
+    ./install.sh gitlab-container-registry | tee install.log
     ./my_view/bin/python -c 'print("hello world")'
+  artifacts:
+    when: always
+    paths:
+      - install.log
