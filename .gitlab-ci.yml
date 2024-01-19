@@ -12,7 +12,10 @@ Clone Spack:
   stage: install_spack
   script: |
     git clone https://github.com/spack/spack.git
-    export PATH="${PWD}/spack/bin:${PATH}"
+    echo "PATH=${PWD}/spack/bin:${PATH}" >> path.env
+  artifacts:
+    reports:
+      dotenv: path.env
 
 Spack setup:
   stage: setup_spack
