@@ -7,10 +7,13 @@ set -x
 #  - git
 
 if command -v apt-get; then
+    apt-get update -y
+    apt-get upgrade -y
     apt-get install -y --no-install-recommends \
             git
 elif command -v yum; then
-    yum install \
+    yum update -y
+    yum install -y \
         git
 elif command -v brew; then
     brew install \
