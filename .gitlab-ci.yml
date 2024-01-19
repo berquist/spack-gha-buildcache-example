@@ -27,7 +27,7 @@ Run workflow:
     ./ci_install_deps.sh
     git clone https://github.com/spack/spack.git
     export PATH="${PWD}/spack/bin:${PATH}"
-    spack bootstrap status
+    spack bootstrap status || true
     spack bootstrap now
     spack compiler find
     eval "$(spack env activate --sh .)"
