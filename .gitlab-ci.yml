@@ -12,17 +12,19 @@ Run workflow:
         IMAGE:
           - debian:trixie-20240110
           - rockylinux/rockylinux:9.3.20231119-ubi
-      - RUNNER_TAG: saas-macos-medium-m1
-        IMAGE:
-          - macos-12-xcode-14
-          - macos-13-xcode-14
-          - macos-14-xcode-15
+      # https://docs.gitlab.com/ee/ci/runners/saas/macos_saas_runner.html
+      # - RUNNER_TAG: saas-macos-medium-m1
+      #   IMAGE:
+      #     - macos-12-xcode-14
+      #     - macos-13-xcode-14
+      #     - macos-14-xcode-15
   tags:
     - ${RUNNER_TAG}
   image: ${IMAGE}
   stage: all
   script: |
     set -x
+    ./ci_install_deps.sh
     git clone https://github.com/spack/spack.git
     export PATH="${PWD}/spack/bin:${PATH}"
     eval "$(spack env activate --sh .)"
