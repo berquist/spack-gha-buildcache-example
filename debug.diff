@@ -15,7 +15,7 @@ index 75d2023c16..8e12de0a9e 100644
 +    if not os.path.exists(dir):
 +        breakpoint()
      dir_entries = sorted(os.scandir(dir), key=lambda d: d.name)
- 
+
      for f in dir_entries:
 diff --git lib/spack/spack/cmd/buildcache.py lib/spack/spack/cmd/buildcache.py
 index f2d88c07bf..2e51605296 100644
@@ -23,16 +23,16 @@ index f2d88c07bf..2e51605296 100644
 +++ lib/spack/spack/cmd/buildcache.py
 @@ -698,7 +698,7 @@ def _push_oci(
          to_be_uploaded = []
- 
+
          tags_to_check = (target_image.with_tag(default_tag(s)) for s in installed_specs_with_deps)
 -        available_blobs = pool.map(_get_spack_binary_blob, tags_to_check)
 +        available_blobs = [_get_spack_binary_blob(t) for t in tags_to_check]
- 
+
          for spec, maybe_blob in zip(installed_specs_with_deps, available_blobs):
              if maybe_blob is not None:
 @@ -718,9 +718,9 @@ def _push_oci(
      )
- 
+
      # Upload blobs
 -    new_blobs = pool.starmap(
 -        _push_single_spack_binary_blob, ((target_image, spec, tmpdir) for spec in to_be_uploaded)
@@ -40,11 +40,11 @@ index f2d88c07bf..2e51605296 100644
 +    new_blobs = [
 +        _push_single_spack_binary_blob(target_image, spec, tmpdir) for spec in to_be_uploaded
 +    ]
- 
+
      # And update the spec to blob mapping
      for spec, blob in zip(to_be_uploaded, new_blobs):
 @@ -746,21 +746,16 @@ def extra_config(spec: Spec):
- 
+
      # Upload manifests
      tty.info("Uploading manifests")
 -    pool.starmap(
@@ -72,17 +72,17 @@ index f2d88c07bf..2e51605296 100644
 +            {"org.opencontainers.image.description": spec.format()},
 +            spec,
 +        )
- 
+
      # Print the image names of the top-level specs
      for spec in to_be_uploaded:
 @@ -787,9 +782,7 @@ def _update_index_oci(
      tags = json.load(response)["tags"]
- 
+
      # Fetch all image config files in parallel
 -    spec_dicts = pool.starmap(
 -        _config_from_tag, ((image_ref, tag) for tag in tags if tag_is_spec(tag))
 -    )
 +    spec_dicts = [_config_from_tag(image_ref, tag) for tag in tags if tag_is_spec(tag)]
- 
+
      # Populate the database
      db_root_dir = os.path.join(tmpdir, "db_root")

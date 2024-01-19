@@ -46,7 +46,7 @@ When running an unpatched Spack (https://github.com/berquist/spack-gha-buildcach
 ```
 ==> [2024-01-17-13:02:34.589741] Selected 12 specs to push to oci://ghcr.io/berquist/spack-gha-buildcache-example
 ==> [2024-01-17-13:02:34.635392] 12 specs need to be pushed to ghcr.io/berquist/spack-gha-buildcache-example
-multiprocessing.pool.RemoteTraceback: 
+multiprocessing.pool.RemoteTraceback:
 """
 Traceback (most recent call last):
   File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/pool.py", line 125, in worker

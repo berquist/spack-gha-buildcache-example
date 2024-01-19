@@ -8,11 +8,12 @@ stages:
 Run workflow:
   stage: all
   script: |
+    set -x
     git clone https://github.com/spack/spack.git
     export PATH="${PWD}/spack/bin:${PATH}"
     eval "$(spack env activate --sh .)"
     spack mirror add \
-        --unsigned
+        --unsigned \
         --oci-username ${CI_REGISTRY_USER} \
         --oci-password ${CI_REGISTRY_PASSWORD} \
         gitlab-container-registry \

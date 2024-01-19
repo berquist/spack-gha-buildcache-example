@@ -1,0 +1,30 @@
+---
+repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v4.5.0"
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+        args: [--fix, lf]
+      - id: trailing-whitespace
+  # - repo: https://github.com/adrienverge/yamllint
+  #   rev: "v1.33.0"
+  #   hooks:
+  #     - id: yamllint
+  - repo: https://github.com/Mateusz-Grzelinski/actionlint-py
+    rev: "v1.6.26.11"
+    hooks:
+      - id: actionlint
+  # - repo: https://gitlab.com/devopshq/gitlab-ci-linter
+  #   rev: "v1.0.6"
+  #   hooks:
+  #     - id: gitlab-ci-linter
