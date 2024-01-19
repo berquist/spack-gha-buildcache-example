@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 spack debug report
 
 rm -rf ._my_view || true

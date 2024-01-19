@@ -41,18 +41,10 @@ jobs:
               --oci-username ${{ github.actor }} \
               --oci-password "${{ secrets.GITHUB_TOKEN }}" \
               "${mirror_name}"
-      - name: Install packages into environment
+      - name: Install packages into environment and push to buildcache
         run: |
           eval "$(spack env activate --sh .)"
           bash ./install.sh
-      - name: Push packages and update index
-        run: |
-          eval "$(spack env activate --sh .)"
-          spack -d buildcache push \
-              --unsigned \
-              --update-index \
-              "${mirror_name}"
-        if: ${{ !cancelled() }}
       - name: Run
         run: |
           ./my_view/bin/python -c 'print("hello world")'
