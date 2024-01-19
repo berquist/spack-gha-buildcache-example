@@ -3,27 +3,13 @@ variables:
   HOMEBREW_NO_AUTO_UPDATE: 1
 
 stages:
-  - install_spack
-  - setup_spack
-  - install_and_push_env
-  - test
+  - all
 
-Clone Spack:
-  stage: install_spack
+Run workflow:
+  stage: all
   script: |
     git clone https://github.com/spack/spack.git
-  #   echo "PATH=${PWD}/spack/bin:${PATH}" >> path.env
-  # artifacts:
-  #   reports:
-  #     dotenv: path.env
-
-Spack setup:
-  stage: setup_spack
-  before_script: |
-    PATH="${PWD}/spack/bin:${PATH}"
-  script: |
-    echo "${PATH}"
-    ls -l
+    export PATH="${PWD}/spack/bin:${PATH}"
     eval "$(spack env activate --sh .)"
     spack mirror add \
         --unsigned
@@ -31,15 +17,5 @@ Spack setup:
         --oci-password ${CI_REGISTRY_PASSWORD} \
         gitlab-container-registry \
         oci://${CI_REGISTRY_IMAGE}
-
-Install packages into environment and push to buildcache:
-  stage: install_and_push_env
-  before_script: |
-    PATH="${PWD}/spack/bin:${PATH}"
-  script: |
     ./install.sh gitlab-container-registry
-
-Run:
-  stage: test
-  script: |
     ./my_view/bin/python -c 'print("hello world")'
