@@ -1,0 +1,36 @@
+---
+variables:
+  HOMEBREW_NO_AUTO_UPDATE: 1
+
+stages:
+  - install_spack
+  - setup_spack
+  - install_and_push_env
+  - test
+
+Clone Spack:
+  stage: install_spack
+  script: |
+    git clone https://github.com/spack/spack.git
+    export PATH="${PWD}/spack/bin:${PATH}"
+
+Spack setup:
+  stage: setup_spack
+  script: |
+    eval "$(spack env activate --sh .)"
+    spack mirror add \
+        --unsigned
+        --oci-username ${CI_REGISTRY_USER} \
+        --oci-password ${CI_REGISTRY_PASSWORD} \
+        gitlab-container-registry \
+        oci://${CI_REGISTRY_IMAGE}
+
+Install packages into environment and push to buildcache:
+  stage: install_and_push_env
+  script: |
+    ./install.sh gitlab-container-registry
+
+Run:
+  stage: test
+  script: |
+    ./my_view/bin/python -c 'print("hello world")'

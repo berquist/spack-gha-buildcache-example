@@ -44,7 +44,7 @@ jobs:
       - name: Install packages into environment and push to buildcache
         run: |
           eval "$(spack env activate --sh .)"
-          bash ./install.sh
+          bash ./install.sh "${mirror_name}"
       - name: Run
         run: |
           ./my_view/bin/python -c 'print("hello world")'
