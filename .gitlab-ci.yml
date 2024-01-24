@@ -1,0 +1,54 @@
+---
+workflow:
+  # Use default
+  name: '$CI_COMMIT_TITLE'
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE != "merge_request_event"'
+    - if: '$CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "merge_request_event"'
+
+variables:
+  HOMEBREW_NO_AUTO_UPDATE: 1
+
+stages:
+  - all
+
+Run workflow:
+  parallel:
+    matrix:
+      - RUNNER_TAG: saas-linux-small-amd64
+        IMAGE:
+          - debian:trixie-20240110
+          - rockylinux/rockylinux:9.3.20231119-ubi
+          # GitLab current default
+          - ruby:3.1
+      # https://docs.gitlab.com/ee/ci/runners/saas/macos_saas_runner.html
+      # - RUNNER_TAG: saas-macos-medium-m1
+      #   IMAGE:
+      #     - macos-12-xcode-14
+      #     - macos-13-xcode-14
+      #     - macos-14-xcode-15
+  tags:
+    - ${RUNNER_TAG}
+  image: ${IMAGE}
+  stage: all
+  script: |
+    set -x
+    ./ci_install_deps.sh
+    git clone https://github.com/spack/spack.git
+    export PATH="${PWD}/spack/bin:${PATH}"
+    spack bootstrap status || true
+    spack bootstrap now
+    spack compiler find
+    eval "$(spack env activate --sh .)"
+    spack mirror add \
+        --unsigned \
+        --oci-username ${CI_REGISTRY_USER} \
+        --oci-password ${CI_REGISTRY_PASSWORD} \
+        gitlab-container-registry \
+        oci://${CI_REGISTRY_IMAGE}
+    ./install.sh gitlab-container-registry >& install.log
+    ./my_view/bin/python -c 'print("hello world")'
+  artifacts:
+    when: always
+    paths:
+      - install.log
