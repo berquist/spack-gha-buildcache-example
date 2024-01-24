@@ -1,4 +1,11 @@
 ---
+workflow:
+  # Use default
+  name: '$CI_COMMIT_TITLE'
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE != "merge_request_event"'
+    - if: '$CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "merge_request_event"'
+
 variables:
   HOMEBREW_NO_AUTO_UPDATE: 1
 
