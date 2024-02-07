@@ -19,6 +19,7 @@ jobs:
           - ubuntu-22.04
           - macos-12
           - macos-13
+          - macos-14
     permissions:
       packages: write
     steps:
