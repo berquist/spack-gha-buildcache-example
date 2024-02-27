@@ -6,7 +6,8 @@ on:
   pull_request:
   push:
   schedule:
-    - cron: '15 2 * * 0'
+    # 0215 daily
+    - cron: '15 2 * * *'
 
 jobs:
   example:
