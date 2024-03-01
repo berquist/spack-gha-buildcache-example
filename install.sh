@@ -11,4 +11,4 @@ rm my_view || true
 
 spack concretize --force --fresh
 spack install --fail-fast
-spack -d buildcache push --rebuild-index --force "${mirror_name}"
+spack buildcache push --rebuild-index --force "${mirror_name}"
