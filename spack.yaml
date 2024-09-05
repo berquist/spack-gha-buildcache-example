@@ -13,3 +13,4 @@ spack:
       signed: false
       access_pair:
       - berquist
+      autopush: true
