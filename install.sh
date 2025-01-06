@@ -11,4 +11,8 @@ rm my_view || true
 
 spack concretize --force --fresh
 spack install --fail-fast
-spack buildcache push --rebuild-index --force "${mirror_name}"
+# See https://github.com/spack/spack/pull/42423 for information on the below.
+# This is no longer necessary if pushing each package after build is enabled.
+# spack buildcache push --rebuild-index --force "${mirror_name}"
+# I'm not sure this is strictly necessary.
+# spack buildcache update-index "${mirror_name}"
