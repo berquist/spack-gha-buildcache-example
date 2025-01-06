@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# ci_install_deps.sh: Install system-level dependencies required for
+# installing Spack itself and Spack packages on continuous integration
+# machines, such as GitHub Actions runners.
+
 set -e
 set -x
 
